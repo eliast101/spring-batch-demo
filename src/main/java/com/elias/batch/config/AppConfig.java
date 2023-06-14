@@ -1,5 +1,7 @@
 package com.elias.batch.config;
 
+import jakarta.annotation.PostConstruct;
+import org.hsqldb.util.DatabaseManagerSwing;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -29,5 +31,13 @@ public class AppConfig {
                 .addScript("classpath:org/springframework/batch/core/schema-hsqldb.sql")
                 .setType(EmbeddedDatabaseType.HSQL) //.H2 or .DERBY
                 .build();
+    }
+
+    // NOTE: In addition, need to add the following VM arguments -Djava.awt.headless=false when the application is started.
+    // in this app, added in a static block in the spring boot main application
+    @PostConstruct
+    public void startDBManager() {
+        //hsqldb
+        DatabaseManagerSwing.main(new String[] { "--url", "jdbc:hsqldb:mem:testdb", "--user", "sa", "--password", "" });
     }
 }

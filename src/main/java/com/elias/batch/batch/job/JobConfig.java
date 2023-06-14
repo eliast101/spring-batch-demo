@@ -38,10 +38,10 @@ public class JobConfig {
     }
 
     @Bean("stockPricesInfoStep")
-    public Step stockPricesInfoStep(JobRepository jobRepository, @Qualifier("customTransactionManager") PlatformTransactionManager platformTransactionManager) {
+    public Step stockPricesInfoStep(JobRepository jobRepository, /*@Qualifier("customTransactionManager")*/ PlatformTransactionManager transactionManager) {
         return new StepBuilder("stockPricesInfoStep", jobRepository)
                 .listener(new SpringBatchStepListener())
-                .<StockInfo, String>chunk(10, platformTransactionManager)
+                .<StockInfo, String>chunk(10, transactionManager)
                 .reader(reader())
                 .processor(stockInfoProcessor())
                 .writer(writer())
