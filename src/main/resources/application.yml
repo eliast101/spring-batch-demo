@@ -1,0 +1,16 @@
+# Primary DB
+spring:
+  datasource:
+    jdbc-url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+  #Batch
+  batch:
+    job:
+      enabled: false
+server:
+  port: 8081
